@@ -66,4 +66,20 @@ router.delete('/:id', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+router.get('/', (req, res) => {
+  const queryText = `SELECT * FROM "treats"
+    WHERE "name" LIKE $1;`;
+  pool
+    .query(queryText, [req.body.name])
+    .then((dbResponse) => {
+      console.log(dbResponse);
+      res.send(dbResponse.rows);
+    })
+    .catch((err) => {
+      console.log('GET err:', err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
