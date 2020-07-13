@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
 // PUT /treats/<id>
 router.put('/:id', (req, res) => {
   const id = req.params.id;
-  const treatData = req.body;
+  const treatData = req.body.description;
   const queryText = `UPDATE "treats" 
     SET "description"=$1 
     WHERE "id"=$2;`;
