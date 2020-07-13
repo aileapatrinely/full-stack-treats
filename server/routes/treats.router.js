@@ -33,7 +33,23 @@ router.post('/', (req, res) => {
     });
 });
 // PUT /treats/<id>
-
+router.put('/:id', (req, res) => {
+  const id = req.params.id;
+  const treatData = req.body;
+  const queryText = `UPDATE "treats" 
+    SET "description"=$1 
+    WHERE "id"=$2;`;
+  pool
+    .query(queryText, [treatData, id])
+    .then((dbResponse) => {
+      console.log(dbResponse);
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log('PUT err:', err);
+      res.sendStatus(500);
+    });
+});
 // DELETE /treats/<id>
 
 module.exports = router;
