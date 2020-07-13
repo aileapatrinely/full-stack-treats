@@ -51,5 +51,19 @@ router.put('/:id', (req, res) => {
     });
 });
 // DELETE /treats/<id>
-
+router.delete('/:id', (req, res) => {
+  const id = req.params.id;
+  const queryText = `DELETE FROM "treats"
+    WHERE "id"=$1;`;
+  pool
+    .query(queryText, [id])
+    .then((dbResponse) => {
+      console.log(dbResponse);
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log('DELETE err:', err);
+      res.sendStatus(500);
+    });
+});
 module.exports = router;
